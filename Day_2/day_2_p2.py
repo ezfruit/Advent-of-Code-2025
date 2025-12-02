@@ -12,15 +12,31 @@ for line in lines:
             continue
 
         windowLength = 1
+        # We use a sliding window algorithm that checks each pattern length of 1 up to length / 2 to check if it repeats
         while windowLength <= len(num) // 2:
 
-            potentialPattern = num[0:0+windowLength]
+            potentialPattern = num[:windowLength]
             idx = 0
 
-            windowLength += 1
+            invalid = True
 
+            while idx + windowLength < len(num):
+
+                idx += windowLength
+                
+                if num[idx:idx+windowLength] == potentialPattern:
+                    potentialPattern = num[idx:idx+windowLength]
+                else:
+                    invalid = False
+                    break
+
+            if invalid:
+                sum += id
+                break
+
+            windowLength += 1
 
 print(sum)
 
 # Invalid ID is the IDs that have a pattern that repeats AT LEAST twice
-# Answer: 
+# Answer: 45283684555
